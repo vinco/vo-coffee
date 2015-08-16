@@ -1,0 +1,28 @@
+{
+  "name": "vo-coffee",
+  "version": "1.0.0",
+  "description": "Coffee Cup Ready",
+  "main": "node-chat.js",
+  "scripts": {
+    "test": "grunt nodeunit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinco/vo-coffee.git"
+  },
+  "keywords": [
+    "coffee",
+    "vinco",
+    "websocket",
+    "chat"
+  ],
+  "author": "Alexander J. Salas B. <a.salas@ieee.org>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/vinco/vo-coffee/issues"
+  },
+  "homepage": "https://github.com/vinco/vo-coffee#readme",
+  "dependencies": {
+    "websocket": "^1.0.21"
+  }
+}

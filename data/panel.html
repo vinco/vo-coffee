@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>WebSockets - Simple chat</title>
+        <script src="resource://sdk/dev/volcan.js"></script>
+        <style>
+body {
+  margin: 10px;
+}
+
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #333;
+}
+
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: "Glyphicons Halflings";
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: 320px;
+}
+
+ul#incomingChatMessages {
+  list-style: none;
+  padding: 0;
+}
+ul#incomingChatMessages li {
+  margin-bottom: 10px;
+}
+ul#incomingChatMessages li .avatar {
+  border-radius: 100%;
+  border: 1px solid #999;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  float: left;
+}
+ul#incomingChatMessages li .avatar img {
+  width: 100%;
+}
+ul#incomingChatMessages li .msgWrap {
+  background: rgba(204, 204, 204, 0.4);
+  border-radius: 5px;
+  position: relative;
+  padding: 5px 12px;
+  float: left;
+  margin: 0 0 0 8px;
+  width: 230px;
+}
+ul#incomingChatMessages li .msgWrap:after {
+  right: 100%;
+  top: 26px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-right-color: rgba(204, 204, 204, 0.4);
+  border-width: 6px;
+  margin-top: -6px;
+}
+ul#incomingChatMessages li .msgWrap.me {
+  background: #5b9cdb;
+}
+ul#incomingChatMessages li .msgWrap.me:after {
+  border-right-color: #5b9cdb;
+}
+ul#incomingChatMessages li .msgWrap.me .user, ul#incomingChatMessages li .msgWrap.me .msg {
+  color: #fff;
+}
+ul#incomingChatMessages li .time {
+  font-size: 11px;
+  color: rgba(204, 204, 204, 0.8);
+  text-align: right;
+  padding-right: 5px;
+  clear: both;
+  line-height: 18px;
+}
+ul#incomingChatMessages li .user {
+  color: #666;
+}
+ul#incomingChatMessages li .msg {
+  color: #666;
+}
+
+ #mensaje {
+   position:fixed;bottom:0;left:0;
+
+    width:100%; display:block;
+   background:  rgba(204, 204, 204, 0.4);
+   padding: 4px;
+ }
+
+          #mensaje input {
+            width: 324px;
+          }
+
+/*        * { font-family:tahoma; font-size:12px; padding:0px; margin:0px; }
+        p { line-height:18px; }
+        div { width:500px; margin-left:auto; margin-right:auto;}
+        #content { padding:5px; background:#ddd; border-radius:5px; overflow-y: scroll;
+                   border:1px solid #CCC; margin-top:10px; height: 160px; }
+        #input { border-radius:2px; border:1px solid #ccc;
+                 margin-top:10px; padding:5px; width:400px;  }
+        #status { width:88px; display:block; float:left; margin-top:15px; }*/
+        </style>
+    </head>
+    <body style="width: 320px; height: 480px">
+<div class="container">
+  <ul id="incomingChatMessages">
+    <li>
+      <div class="avatar"><img src="http://www.gravatar.com/avatar/69a9e057ca1f4964f912cd926c3b34c4.png"></div>
+      <div class="msgWrap me">
+        <div class="user">Presto</div>
+        <div class="msg">I'm doing awesome! How have you been?</div>
+      </div>
+      <div class="time"><i class="glyphicon glyphicon-time"></i> about 16 min ago</div>
+    </li>
+  </ul>
+</div>
+        <div id="mensaje">
+            <span id="status" style="display: none">Connecting...</span>
+            <input type="text" id="input" disabled="disabled" />
+        </div>
+
+        <script src="jquery.min.js"></script>
+        <script src="panel.js"></script>
+    </body>
+</html>

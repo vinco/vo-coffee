@@ -130,18 +130,6 @@ $(function () {
      * Add message to the chat window
      */
     function addMessage(author, message, color, dt) {
-/*          <li>
-            <div class="avatar"><img src="http://www.gravatar.com/avatar/69a9e057ca1f4964f912cd926c3b34c4.png"></div>
-            <div class="msgWrap me">
-              <div class="user">Presto!!</div>
-              <div class="msg">I'm doing awesome! How have you been?</div>
-            </div>
-            <div class="time"><i class="glyphicon glyphicon-time"></i><span data-livestamp="1439717661"></span></div>
-          </li>*/
-/*        content.prepend('<p><span style="color:' + color + '">' + author + '</span> @ ' +
-             + (dt.getHours() < 10 ? '0' + dt.getHours() : dt.getHours()) + ':'
-             + (dt.getMinutes() < 10 ? '0' + dt.getMinutes() : dt.getMinutes())
-             + ': ' + message + '</p>');*/
              var me = 'me';
              if(myName != author){
               me = '';
@@ -156,13 +144,6 @@ $(function () {
                              '<div class="time"><i class="glyphicon glyphicon-time"></i><span data-livestamp="'+dt+'"></span> </div>'+
                              '</li>');
       window.scrollTo(0,document.body.scrollHeight);
-
-/*                        <span style="color:' + color + '">' + author + '</span> @ ' +
-             + (dt.getHours() < 10 ? '0' + dt.getHours() : dt.getHours()) + ':'
-             + (dt.getMinutes() < 10 ? '0' + dt.getMinutes() : dt.getMinutes())
-             + ': ' + message + '</p>');*/
-            //var event = new CustomEvent('coffee', { 'detail': {author: author, text: message} });
-            //document.dispatchEvent(event);
     }
     $('input').placeholder();
 });

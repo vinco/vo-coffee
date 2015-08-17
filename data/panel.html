@@ -29,6 +29,7 @@ body {
 
 .container {
   max-width: 320px;
+  padding-bottom: 20px;
 }
 
 ul#incomingChatMessages {
@@ -117,25 +118,16 @@ ul#incomingChatMessages li .msg {
         #status { width:88px; display:block; float:left; margin-top:15px; }*/
         </style>
     </head>
-    <body style="width: 320px; height: 480px">
-<div class="container">
-  <ul id="incomingChatMessages">
-    <li>
-      <div class="avatar"><img src="http://www.gravatar.com/avatar/69a9e057ca1f4964f912cd926c3b34c4.png"></div>
-      <div class="msgWrap me">
-        <div class="user">Presto</div>
-        <div class="msg">I'm doing awesome! How have you been?</div>
+    <body style="width: 320px; height: 430px">
+      <div class="container">
+        <ul id="incomingChatMessages">
+
+        </ul>
       </div>
-      <div class="time"><i class="glyphicon glyphicon-time"></i> about 16 min ago</div>
-    </li>
-  </ul>
-</div>
         <div id="mensaje">
             <span id="status" style="display: none">Connecting...</span>
-            <input type="text" id="input" disabled="disabled" />
+            <input type="text" id="input" placeholder="Twitter handler" disabled="disabled" />
         </div>
 
-        <script src="jquery.min.js"></script>
-        <script src="panel.js"></script>
     </body>
 </html>

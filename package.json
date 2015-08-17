@@ -1,0 +1,28 @@
+{
+  "id": "{caba7926-c0be-490a-8d0c-78011ebfc418}",
+  "title": "French Press",
+  "name": "vo-coffe",
+  "version": "0.0.1",
+  "description": "Coffee Cup Ready",
+  "main": "index.js",
+  "author": "Alexander J. Salas B. <a.salas@ieee.org>",
+  "preferences": [{
+      "name": "username",
+      "title": "Username",
+      "description": "Twitter handler",
+      "type": "string",
+      "value": ""
+  },
+  {
+      "description": "IP/Port/Domain of WebService",
+      "name": "server",
+      "type": "string",
+      "value": "127.0.0.1:1337",
+      "title": "Service"
+  }],
+  "engines": {
+    "firefox": ">=36.0a1 <=43.0",
+    "seamonkey": ">=2.33 <=2.39"
+  },
+  "license": "MPL-2.0"
+}

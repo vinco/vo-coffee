@@ -1,15 +1,16 @@
+//document.addEventListener('coffee', function (e) { self.port.emit('coffee', e.detail); }, false);
+
 $(function () {
     "use strict";
 
     // for better performance - to avoid searching in DOM
     var content = $('#incomingChatMessages');
     var input = $('#input');
-    var status = $('#status');
 
     // my color assigned by the server
     var myColor = false;
     // my name sent to the server
-    var myName = false;
+    var myName = self.options.username.replace('@','');
 
     // if user is running mozilla then use it's built-in WebSocket
     window.WebSocket = window.WebSocket || window.MozWebSocket;
@@ -24,12 +25,16 @@ $(function () {
     }
 
     // open connection
-    var connection = new WebSocket('ws://127.0.0.1:1337');
+    var connection = new WebSocket('ws://' + self.options.server);
 
     connection.onopen = function () {
         // first we want users to enter their names
         input.removeAttr('disabled');
-        status.text('Choose name:');
+        if (validTwitteUser(myName)) {
+          connection.send(myName.replace('@',''));
+          input.attr('placeholder', 'Coffee ready to share?');
+        }
+        //
     };
 
     connection.onerror = function (error) {
@@ -54,7 +59,6 @@ $(function () {
         // check the server source code above
         if (json.type === 'color') { // first response from the server with user's color
             myColor = json.data;
-            status.text(myName + ': ').css('color', myColor);
             input.removeAttr('disabled').focus();
             // from now user can start sending messages
         } else if (json.type === 'history') { // entire message history
@@ -75,11 +79,25 @@ $(function () {
     /**
      * Send mesage when user presses Enter key
      */
+
     input.keydown(function(e) {
         if (e.keyCode === 13) {
             var msg = $(this).val();
             if (!msg) {
                 return;
+            }
+            // we know that the first message sent from a user their name
+            if (!myName) {
+                if(validTwitteUser(msg)){
+                  myName = msg.replace('@','');
+                  msg = myName;
+                  self.port.emit('username', msg);
+                  input.attr('placeholder', 'Coffee ready to share?');
+                } else {
+                  $(this).val('');
+                  input.attr('placeholder', 'Input valid twitter username');
+                  return;
+                }
             }
             // send the message as an ordinary text
             connection.send(msg);
@@ -87,11 +105,6 @@ $(function () {
             // disable the input field to make the user wait until server
             // sends back response
             input.attr('disabled', 'disabled');
-
-            // we know that the first message sent from a user their name
-            if (myName === false) {
-                myName = msg;
-            }
         }
     });
 
@@ -102,44 +115,54 @@ $(function () {
      */
     setInterval(function() {
         if (connection.readyState !== 1) {
-            status.text('Error');
             input.attr('disabled', 'disabled').val('Unable to comminucate '
                                                  + 'with the WebSocket server.');
+        } else {
+          input.removeAttr('disabled');
         }
     }, 3000);
+
+    function validTwitteUser(sn) {
+        return /^[a-zA-Z0-9_]{1,15}$/.test(sn.replace('@',''));
+    }
 
     /**
      * Add message to the chat window
      */
     function addMessage(author, message, color, dt) {
-/*    <li>
-      <div class="avatar"><img src="http://www.gravatar.com/avatar/ab30d9e30e905373313260881646162f.png"></div>
-      <div class="msgWrap">
-        <div class="user">Alexis</div>
-        <div class="msg">Great! Thanks for asking.</div>
-      </div>
-      <div class="time"><i class="glyphicon glyphicon-time"></i> about 13 min ago</div>
-    </li>*/
+/*          <li>
+            <div class="avatar"><img src="http://www.gravatar.com/avatar/69a9e057ca1f4964f912cd926c3b34c4.png"></div>
+            <div class="msgWrap me">
+              <div class="user">Presto!!</div>
+              <div class="msg">I'm doing awesome! How have you been?</div>
+            </div>
+            <div class="time"><i class="glyphicon glyphicon-time"></i><span data-livestamp="1439717661"></span></div>
+          </li>*/
 /*        content.prepend('<p><span style="color:' + color + '">' + author + '</span> @ ' +
              + (dt.getHours() < 10 ? '0' + dt.getHours() : dt.getHours()) + ':'
              + (dt.getMinutes() < 10 ? '0' + dt.getMinutes() : dt.getMinutes())
              + ': ' + message + '</p>');*/
-        content.append('<li>'+
-                        '<div class="avatar"><img src="https://twitter.com/'+author+'/profile_image?size=bigger"></div>'+
-                        '<div class="msgWrap">'+
-                        '<div class="user">'+ author + '</div>'+
-                        '<div class="msg">'+message+'</div>'+
-                        '</div>'+
-                        '<div class="time"><i class="glyphicon glyphicon-time"></i> about 13 min ago</div>'+
-                        '</li>');
+             var me = 'me';
+             if(myName != author){
+              me = '';
+              self.port.emit('coffee', {author: author, text: message});
+             }
+             content.append('<li>'+
+                             '<div class="avatar"><img src="https://twitter.com/'+author+'/profile_image?size=bigger"></div>'+
+                             '<div class="msgWrap '+me+'">'+
+                             '<div class="user">'+ author + '</div>'+
+                             '<div class="msg">'+message+'</div>'+
+                             '</div>'+
+                             '<div class="time"><i class="glyphicon glyphicon-time"></i><span data-livestamp="'+dt+'"></span> </div>'+
+                             '</li>');
       window.scrollTo(0,document.body.scrollHeight);
-                        
+
 /*                        <span style="color:' + color + '">' + author + '</span> @ ' +
              + (dt.getHours() < 10 ? '0' + dt.getHours() : dt.getHours()) + ':'
              + (dt.getMinutes() < 10 ? '0' + dt.getMinutes() : dt.getMinutes())
              + ': ' + message + '</p>');*/
-            var event = new CustomEvent('coffee', { 'detail': {author: author, text: message} });
-            document.dispatchEvent(event);
+            //var event = new CustomEvent('coffee', { 'detail': {author: author, text: message} });
+            //document.dispatchEvent(event);
     }
+    $('input').placeholder();
 });
-

@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "French Press",
+  "description": "Coffee Cup Ready",
+  "version": "0.0.1",
+  "icons": { "16": "data/icon16.png",
+           "48": "data/icon48.png",
+          "128": "data/icon128.png" },
+  "author": "Alexander J. Salas B. <a.salas@ieee.org>",
+  "background": {
+    "scripts":["background.js"]
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "data/icon19.png",
+      "38": "data/icon38.png"
+    },
+    "default_title": "French Press",
+    "default_popup": "data/panel.html"
+  },
+  "permissions": [
+    "notifications",
+    "storage"
+  ],
+  "web_accessible_resources": [
+    "data/icon48.png"
+  ],
+  "options_ui": {
+    "page": "data/options.html",
+    "chrome_style": true
+  }
+}
